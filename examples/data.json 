@@ -1,0 +1,8 @@
+{
+    "name": "Gabriel",
+    "age": 39,
+    "developer": true,
+    "getName" : () => {
+        return "Gabriel"
+    }
+}

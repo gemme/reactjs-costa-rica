@@ -1,6 +1,8 @@
 //import "./App.css";
 import React from "react";
 import { useState } from "react";
+import { FormReducer } from "./FormReducer";
+import { ListData } from "./ListData";
 
 // hooks
 // built-in hooks
@@ -82,6 +84,8 @@ function App() {
       </button>
       <span>{"Hola mundo: " + name}</span>
       <LastName lastname={lastname} updateLastName={updateLastName} />
+      {/* <FormReducer /> */}
+      <ListData />
     </div>
   );
 }
