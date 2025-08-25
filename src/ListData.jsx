@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./ListData.css";
 const _data = {
   url: "https://anapioficeandfire.com/api/characters/583",
   name: "Jon Snow",
@@ -38,13 +39,31 @@ const _data = {
   ],
   playedBy: ["Kit Harington"],
 };
+
+// Especificidad
+// tags, classes, id
+/*
+    div{
+        color: 'pink'
+    }
+
+    div .format{
+        color: 'red'
+    }
+
+    .format{
+        color:'black'
+    }    
+ */
+
 // mock
 export const ListData = () => {
   const [data, setData] = useState({});
-
+  const [input, setInput] = useState(583);
+  console.log("render");
   useEffect(() => {
     // https://anapioficeandfire.com/api/characters/538
-    fetch("https://anapioficeandfire.com/api/characters/583", {
+    fetch("https://anapioficeandfire.com/api/characters/" + input, {
       method: "GET",
     })
       .then((response) => {
@@ -56,18 +75,39 @@ export const ListData = () => {
         console.log(data);
         setData(data);
       });
+    console.log("useEffect1");
+    const id = setInterval(() => {
+      console.log("interval");
+    }, 1000);
     // lifecycle hooks
-  }, []);
-  /*
-    .then((data) => {
-      console.log(data);
-      setData(data);
-    });
-    */
+    // montaje
+    // desmontaje
+    return () => {
+      console.log("desmontaje");
+      clearInterval(id);
+    };
+  }, [
+    /* no dependencia*/
+    input,
+  ]);
+
   return (
     <ul>
       {
-        <>
+        <div
+          className="format"
+          id="custom"
+          style={{
+            background: "yellow",
+          }}
+        >
+          <input
+            type="text"
+            value={input}
+            onChange={(event) => {
+              setInput(parseInt(event.target.value));
+            }}
+          />
           <li>{data.name}</li>
           <h3>Aliases</h3>
           <ul>
@@ -75,7 +115,7 @@ export const ListData = () => {
               <li>{alias}</li>
             ))}
           </ul>
-        </>
+        </div>
       }
     </ul>
   );

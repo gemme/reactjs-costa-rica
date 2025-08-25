@@ -1,0 +1,15 @@
+div{
+    background: pink
+}
+
+div .format{
+    background: red
+}
+
+.format{
+    background:black
+}
+
+#custom{
+    background: purple;
+}

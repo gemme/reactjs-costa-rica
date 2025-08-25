@@ -2,7 +2,8 @@
 import React from "react";
 import { useState } from "react";
 import { FormReducer } from "./FormReducer";
-import { ListData } from "./ListData";
+//import { ListData } from "./ListData";
+import { CreateUser } from "./CreateUser";
 
 // hooks
 // built-in hooks
@@ -63,6 +64,7 @@ function App() {
   // hook
   const [name, setName] = useState("");
   const [lastname, setLastName] = useState("");
+  const [toggle, setToggle] = useState(true);
 
   function updateName() {
     setName("Gabriel");
@@ -74,7 +76,7 @@ function App() {
 
   return (
     <div>
-      <button
+      {/* <button
         onClick={() => {
           updateName();
           updateLastName();
@@ -82,10 +84,17 @@ function App() {
       >
         Click me
       </button>
-      <span>{"Hola mundo: " + name}</span>
+      <span
+        onClick={() => {
+          setToggle(!toggle);
+        }}
+      >
+        {"Hola mundo: " + name}
+      </span>
       <LastName lastname={lastname} updateLastName={updateLastName} />
-      {/* <FormReducer /> */}
-      <ListData />
+      <FormReducer />
+      {toggle && <ListData />} */}
+      <CreateUser />
     </div>
   );
 }
