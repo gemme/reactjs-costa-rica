@@ -49,13 +49,13 @@ export const ListUser = () => {
             timeStyle: "short",
           }).format(new Date(user.dob));
           return (
-            <li
-              onClick={() => {
-                navigate("/users/update/" + user._id);
-              }}
-              className="flex justify-around gap-x-6 py-5 cursor"
-            >
-              <div className="flex min-w-0 gap-x-4">
+            <li className="flex justify-around gap-x-6 py-5 cursor">
+              <div
+                onClick={() => {
+                  navigate("/users/update/" + user._id);
+                }}
+                className="flex min-w-0 gap-x-4"
+              >
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm/6 font-semibold text-white">
                     {user.name}
@@ -66,14 +66,22 @@ export const ListUser = () => {
                 </div>
               </div>
               <div className="flex justify-end gap-x-4">
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <div
+                  onClick={() => {
+                    navigate("/users/update/" + user._id);
+                  }}
+                  className="hidden shrink-0 sm:flex sm:flex-col sm:items-end"
+                >
                   <p className="text-sm/6 text-white">Date of Birth</p>
                   <p className="mt-1 text-xs/5 text-gray-400">
                     {formattedDate}
                   </p>
                 </div>
                 <div>
-                  <Button onClick={() => removeUser(user._id)} label="Delete" />
+                  <Button
+                    onClick={(event) => removeUser(user._id)}
+                    label="Delete"
+                  />
                 </div>
               </div>
             </li>
