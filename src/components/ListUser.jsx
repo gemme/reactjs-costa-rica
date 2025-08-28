@@ -8,7 +8,6 @@ export const ListUser = () => {
   const { users, loadUsers, error: usersError, loading } = useLoadUsers();
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const user = useUser();
 
   const removeUser = async (id) => {
     try {
@@ -29,7 +28,6 @@ export const ListUser = () => {
   };
   return (
     <div>
-      <h2>{user?.username}</h2>
       <div className="flex justify-end">
         <Button
           onClick={() => {
@@ -49,7 +47,7 @@ export const ListUser = () => {
             timeStyle: "short",
           }).format(new Date(user.dob));
           return (
-            <li className="flex justify-around gap-x-6 py-5 cursor">
+            <li className="cursor-pointer flex gap-x-6 hover:bg-gray-800 justify-start py-5 rounded ">
               <div
                 onClick={() => {
                   navigate("/users/update/" + user._id);
@@ -65,7 +63,7 @@ export const ListUser = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex justify-end gap-x-4">
+              <div className="flex min-w-0 gap-x-4">
                 <div
                   onClick={() => {
                     navigate("/users/update/" + user._id);
@@ -77,12 +75,12 @@ export const ListUser = () => {
                     {formattedDate}
                   </p>
                 </div>
-                <div>
-                  <Button
-                    onClick={(event) => removeUser(user._id)}
-                    label="Delete"
-                  />
-                </div>
+              </div>
+              <div>
+                <Button
+                  onClick={(event) => removeUser(user._id)}
+                  label="Delete"
+                />
               </div>
             </li>
           );

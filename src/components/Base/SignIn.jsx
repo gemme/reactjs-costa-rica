@@ -15,6 +15,7 @@ export const SignIn = () => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
       userContext.setUsername(username);
       userContext.setToken(token);
       navigate("/");

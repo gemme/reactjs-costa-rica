@@ -8,12 +8,15 @@ import { UpdateUser } from "./components/UpdateUser.jsx";
 import { CreateUser } from "./components/CreateUser.jsx";
 import { UserProvider } from "./providers/UserProvider.jsx";
 import { SignIn } from "./components/Base/SignIn.jsx";
+import { useUserAuthenticated } from "./hooks/User/useUserAuthenticated.js";
+import { Auth } from "./components/Auth.jsx";
 
 const Main = () => {
   return (
     <BrowserRouter>
       <StrictMode>
         <UserProvider>
+          <Auth />
           <Routes>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/" element={<App />}>
