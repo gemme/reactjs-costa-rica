@@ -8,9 +8,11 @@ import { useState, useEffect } from "react";
 export const useLoadUsers = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function loadUsers() {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:3000/api/users", {
         method: "GET",
       });
@@ -19,6 +21,8 @@ export const useLoadUsers = () => {
     } catch (error) {
       console.error(error);
       setError(error);
+    } finally {
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -29,5 +33,6 @@ export const useLoadUsers = () => {
     users,
     error,
     loadUsers,
+    loading,
   };
 };

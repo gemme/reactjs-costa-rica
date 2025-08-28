@@ -1,12 +1,14 @@
-import { useLoadUsers } from "../hooks/useLoadUsers";
+import { useLoadUsers } from "../hooks/User/useLoadUsers";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-
+import { Button } from "./Base/Button";
+import { useUser } from "../providers/UserProvider";
 export const ListUser = () => {
   //const {removeUser} = useRemoveUser();
-  const { users, loadUsers, error: usersError } = useLoadUsers();
+  const { users, loadUsers, error: usersError, loading } = useLoadUsers();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const user = useUser();
 
   const removeUser = async (id) => {
     try {
@@ -27,40 +29,57 @@ export const ListUser = () => {
   };
   return (
     <div>
-      <h2>List of users</h2>
-      <button
-        onClick={() => {
-          navigate("/users/create");
-        }}
-      >
-        Add User
-      </button>
-      <table>
-        <thead>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Date of Birth</th>
-        </thead>
+      <h2>{user?.username}</h2>
+      <div className="flex justify-end">
+        <Button
+          onClick={() => {
+            navigate("/users/create");
+          }}
+          label={"Create New User"}
+        />
+      </div>
 
-        <tbody>
-          {users.map((user) => {
-            const formattedDate = new Intl.DateTimeFormat("en-US", {
-              dateStyle: "short",
-              timeStyle: "short",
-            }).format(new Date(user.dob));
-            return (
-              <tr>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{formattedDate}</td>
-                <td>
-                  <button onClick={() => removeUser(user._id)}>Delete</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <ul role="list" className="divide-y divide-white/5 m-10">
+        {loading && (
+          <span className="text-sm/6 font-medium text-white">Loading...</span>
+        )}
+        {users.map((user) => {
+          const formattedDate = new Intl.DateTimeFormat("en-US", {
+            dateStyle: "long",
+            timeStyle: "short",
+          }).format(new Date(user.dob));
+          return (
+            <li
+              onClick={() => {
+                navigate("/users/update/" + user._id);
+              }}
+              className="flex justify-around gap-x-6 py-5 cursor"
+            >
+              <div className="flex min-w-0 gap-x-4">
+                <div className="min-w-0 flex-auto">
+                  <p className="text-sm/6 font-semibold text-white">
+                    {user.name}
+                  </p>
+                  <p className="mt-1 truncate text-xs/5 text-gray-400">
+                    {user.email}
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-x-4">
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm/6 text-white">Date of Birth</p>
+                  <p className="mt-1 text-xs/5 text-gray-400">
+                    {formattedDate}
+                  </p>
+                </div>
+                <div>
+                  <Button onClick={() => removeUser(user._id)} label="Delete" />
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
